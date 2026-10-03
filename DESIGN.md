@@ -21,22 +21,23 @@ does in a dish.
 | Paprika | *Capsicum annuum* | Fire Resistance | HC2 bell pepper |
 | Chili Flakes | *Capsicum frutescens* | Speed | HC2 chili pepper |
 | Garlic Powder | *Allium sativum* | keeps 50% longer, +0.5 saturation | HC2 garlic |
-| Saffron | *Crocus sativus* | Luck | wandering trader (rare) |
-| Cumin | *Cuminum cyminum* | +1.5 saturation | wandering trader (rare) |
-| Turmeric | *Curcuma longa* | Health Boost | wandering trader (rare) |
-| Cardamom | *Elettaria cardamomum* | Jump Boost | wandering trader (rare) |
-| Clove | *Syzygium aromaticum* | keeps 100% longer | wandering trader (rare) |
-| Star Anise | *Illicium verum* | Water Breathing | wandering trader (rare) |
+| Saffron | *Crocus sativus* | Luck | any mod's `c:crops/` tag, or the wandering trader |
+| Cumin | *Cuminum cyminum* | +1.5 saturation | any mod's `c:crops/` tag, or the wandering trader |
+| Turmeric | *Curcuma longa* | Health Boost | any mod's `c:crops/` tag, or the wandering trader |
+| Cardamom | *Elettaria cardamomum* | Jump Boost | any mod's `c:crops/` tag, or the wandering trader |
+| Clove | *Syzygium aromaticum* | keeps 100% longer | any mod's `c:crops/` tag, or the wandering trader |
+| Star Anise | *Illicium verum* | Water Breathing | any mod's `c:crops/` tag, or the wandering trader |
 
 **Getting spices.** Craft a **Mortar and Pestle** (stick over a stone bowl shape). Put it in the
 grid with a source crop to get 2 spice; the mortar stays in the grid and wears down (128 uses).
-Each source is an item tag, `stevespantry:spice_sources/<spice>`, which lists the HarvestCraft
-item id and the matching `c:` tag, both optional. Modpacks can add sources with a datapack. A grind
-recipe only loads when its tag has something in it. The wandering trader sells every spice.
 
-The HarvestCraft item ids (`pamhc2crops:gingeritem` and so on) follow HC2's naming and are confirmed
-for the crops; the tree ids (`pamhc2trees:cinnamonitem` etc.) follow the same pattern but still need
-checking in game.
+Each spice's sources are an item tag, `stevespantry:spice_sources/<spice>`. It lists the
+HarvestCraft item (where there is one) and the shared `c:` tags other mods use, such as
+`c:crops/ginger`, `c:crops/chili_pepper` or `c:seeds/mustard`. Every entry is optional, so Pam's
+isn't required: any mod that puts its ginger in `c:crops/ginger` can be ground into Ground Ginger.
+Modpacks can add more sources with a datapack. A grind recipe only loads when its tag has
+something in it. The wandering trader sells every spice, which covers the rare ones until a mod
+provides them.
 
 ## Dishes (the Tinkers' Construct part)
 
@@ -76,7 +77,7 @@ Dishes don't last forever.
 
 ## Next steps
 
-1. Grow the rare spices: saffron crocus, cumin, turmeric, cardamom crops; clove and star anise trees.
+1. Grow the rare spices ourselves (other mods can already supply them through `c:` tags): saffron crocus, cumin, turmeric, cardamom crops; clove and star anise trees.
 2. Tint the dish texture from its ingredients, like Tinkers' part colours.
 3. Signature combos: named recipes (curry, chai, pumpkin spice) that give bonus effects when a dish
    has the right spice set.

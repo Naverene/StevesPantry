@@ -7,6 +7,14 @@
     {
       "id": "#c:fruits/nutmeg",
       "required": false
+    },
+    {
+      "id": "#c:crops/nutmeg",
+      "required": false
+    },
+    {
+      "id": "#c:spices/nutmeg",
+      "required": false
     }
   ]
 }

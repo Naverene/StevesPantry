@@ -82,7 +82,7 @@ public enum Spice implements StringRepresentable {
         return shelfLifeMultiplier;
     }
 
-    /** Rare spices have no HarvestCraft source yet; for now only the wandering trader sells them. */
+    /** Rare spices have no HarvestCraft source; they come from other mods' {@code c:} tags or the wandering trader. */
     public boolean rare() {
         return rare;
     }
