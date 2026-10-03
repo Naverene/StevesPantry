@@ -7,6 +7,14 @@
     {
       "id": "#c:crops/ginger",
       "required": false
+    },
+    {
+      "id": "#c:vegetables/ginger",
+      "required": false
+    },
+    {
+      "id": "#c:spices/ginger",
+      "required": false
     }
   ]
 }

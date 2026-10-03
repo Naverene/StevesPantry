@@ -7,6 +7,18 @@
     {
       "id": "#c:crops/bellpepper",
       "required": false
+    },
+    {
+      "id": "#c:crops/bell_pepper",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/bell_pepper",
+      "required": false
+    },
+    {
+      "id": "#c:spices/paprika",
+      "required": false
     }
   ]
 }

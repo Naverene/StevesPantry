@@ -7,6 +7,14 @@
     {
       "id": "#c:crops/garlic",
       "required": false
+    },
+    {
+      "id": "#c:vegetables/garlic",
+      "required": false
+    },
+    {
+      "id": "#c:spices/garlic",
+      "required": false
     }
   ]
 }

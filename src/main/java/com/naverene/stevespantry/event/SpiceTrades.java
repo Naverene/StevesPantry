@@ -10,8 +10,8 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 /**
- * The wandering trader doubles as a spice merchant. It's the only source of the rare spices
- * until the mod grows its own saffron, cumin, turmeric, cardamom, clove and star anise.
+ * The wandering trader doubles as a spice merchant, so the rare spices (saffron, cumin, turmeric,
+ * cardamom, clove, star anise) are obtainable even when no installed mod grows them.
  */
 public final class SpiceTrades {
     private SpiceTrades() {}

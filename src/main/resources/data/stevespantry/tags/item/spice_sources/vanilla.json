@@ -7,6 +7,22 @@
     {
       "id": "#c:fruits/vanillabean",
       "required": false
+    },
+    {
+      "id": "#c:fruits/vanilla_bean",
+      "required": false
+    },
+    {
+      "id": "#c:crops/vanilla",
+      "required": false
+    },
+    {
+      "id": "#c:crops/vanilla_bean",
+      "required": false
+    },
+    {
+      "id": "#c:spices/vanilla",
+      "required": false
     }
   ]
 }
