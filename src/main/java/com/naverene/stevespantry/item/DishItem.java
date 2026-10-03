@@ -3,7 +3,7 @@ package com.naverene.stevespantry.item;
 import com.naverene.stevespantry.ModRegistries;
 import com.naverene.stevespantry.PantryClock;
 import com.naverene.stevespantry.Spice;
-import com.naverene.stevespantry.StevesPantry;
+import com.naverene.stevespantry.reference.Reference;
 import com.naverene.stevespantry.component.DishContents;
 import com.naverene.stevespantry.component.Freshness;
 import java.util.List;
@@ -119,7 +119,7 @@ public class DishItem extends Item {
             return super.getName(stack);
         }
         List<Item> parts = contents.ingredients().stream().distinct().toList();
-        String base = "item." + StevesPantry.MODID + ".dish.";
+        String base = "item." + Reference.MODID + ".dish.";
         MutableComponent name = switch (parts.size()) {
             case 1 -> Component.translatable(base + "one", parts.get(0).getDescription());
             case 2 -> Component.translatable(base + "two", parts.get(0).getDescription(), parts.get(1).getDescription());
@@ -134,7 +134,7 @@ public class DishItem extends Item {
         if (contents == null) {
             return;
         }
-        String key = "tooltip." + StevesPantry.MODID + ".";
+        String key = "tooltip." + Reference.MODID + ".";
         Level level = context.level();
         Freshness freshness = stack.get(ModRegistries.FRESHNESS);
         if (freshness != null && level != null) {
@@ -169,7 +169,7 @@ public class DishItem extends Item {
 
     /** One line saying what a spice adds to a dish. */
     public static MutableComponent describeSpiceBonus(Spice spice) {
-        String key = "tooltip." + StevesPantry.MODID + ".bonus.";
+        String key = "tooltip." + Reference.MODID + ".bonus.";
         Holder<MobEffect> effect = spice.effect();
         if (effect != null) {
             return Component.translatable(key + "effect", effect.value().getDisplayName());
