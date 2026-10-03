@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:mustardseedsitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/mustard",
+      "required": false
+    }
+  ]
+}

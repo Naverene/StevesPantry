@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:sesameseedsitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/sesame",
+      "required": false
+    }
+  ]
+}

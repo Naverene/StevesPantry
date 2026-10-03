@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:gingeritem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/ginger",
+      "required": false
+    }
+  ]
+}

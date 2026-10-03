@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2trees:nutmegitem",
+      "required": false
+    },
+    {
+      "id": "#c:fruits/nutmeg",
+      "required": false
+    }
+  ]
+}

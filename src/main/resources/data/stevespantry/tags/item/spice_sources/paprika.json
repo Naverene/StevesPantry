@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:bellpepperitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/bellpepper",
+      "required": false
+    }
+  ]
+}

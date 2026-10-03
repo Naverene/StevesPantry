@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2trees:peppercornitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/peppercorn",
+      "required": false
+    }
+  ]
+}

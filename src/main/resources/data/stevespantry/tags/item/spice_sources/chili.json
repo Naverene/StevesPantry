@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:chilipepperitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/chilipepper",
+      "required": false
+    }
+  ]
+}

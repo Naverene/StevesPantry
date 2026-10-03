@@ -1,0 +1,41 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="stevespantry"
+version="0.1.0"
+displayName="Steve's Pantry"
+authors="awweaver"
+description='''
+Spices from around the world and dishes you assemble yourself, Tinkers' style.
+Dishes go stale and spoil, so cook what you'll eat. Pairs with Pam's HarvestCraft 2.
+'''
+
+[[dependencies.stevespantry]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.stevespantry]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1,1.21.2)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.stevespantry]]
+    modId="pamhc2crops"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.stevespantry]]
+    modId="pamhc2trees"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"

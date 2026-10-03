@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2trees:vanillabeanitem",
+      "required": false
+    },
+    {
+      "id": "#c:fruits/vanillabean",
+      "required": false
+    }
+  ]
+}

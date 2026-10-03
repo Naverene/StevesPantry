@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:garlicitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/garlic",
+      "required": false
+    }
+  ]
+}
