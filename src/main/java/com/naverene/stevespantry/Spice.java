@@ -1,6 +1,7 @@
 package com.naverene.stevespantry;
 
 import com.mojang.serialization.Codec;
+import com.naverene.stevespantry.reference.Reference;
 import io.netty.buffer.ByteBuf;
 import java.util.function.Supplier;
 import net.minecraft.core.Holder;
@@ -87,7 +88,7 @@ public enum Spice implements StringRepresentable {
     }
 
     public String translationKey() {
-        return "item." + StevesPantry.MODID + "." + id;
+        return "item." + Reference.MODID + "." + id;
     }
 
     @Override

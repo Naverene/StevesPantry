@@ -8,6 +8,8 @@ import com.naverene.stevespantry.item.SpiceItem;
 import com.naverene.stevespantry.recipe.DishAssemblyRecipe;
 import java.util.EnumMap;
 import java.util.Map;
+
+import com.naverene.stevespantry.reference.Reference;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -25,7 +27,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class ModRegistries {
-    private static final String MODID = StevesPantry.MODID;
+    private static final String MODID = Reference.MODID;
 
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS =
             DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, MODID);
