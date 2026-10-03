@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "stevespantry:spice_sources/ginger"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "stevespantry:mortar_and_pestle"
+    },
+    {
+      "tag": "stevespantry:spice_sources/ginger"
+    }
+  ],
+  "result": {
+    "id": "stevespantry:ginger",
+    "count": 2
+  }
+}
