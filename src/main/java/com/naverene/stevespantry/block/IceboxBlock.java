@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-/** Unpowered cold storage: 27 slots, and dishes inside spoil three times slower. */
+/** Unpowered cold storage: 27 food slots and an ice slot. Dishes inside spoil three times slower while there's ice. */
 public class IceboxBlock extends BaseEntityBlock {
     public static final MapCodec<IceboxBlock> CODEC = simpleCodec(IceboxBlock::new);
 
@@ -82,5 +82,6 @@ public class IceboxBlock extends BaseEntityBlock {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip." + Reference.MODID + ".icebox", IceboxBlockEntity.SLOWDOWN)
                 .withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("tooltip." + Reference.MODID + ".icebox.ice").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -7,6 +7,7 @@ import com.naverene.stevespantry.component.Freshness;
 import com.naverene.stevespantry.item.DishItem;
 import com.naverene.stevespantry.item.MortarAndPestleItem;
 import com.naverene.stevespantry.item.SpiceItem;
+import com.naverene.stevespantry.menu.IceboxMenu;
 import com.naverene.stevespantry.recipe.DishAssemblyRecipe;
 import java.util.EnumMap;
 import java.util.Map;
@@ -17,7 +18,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -45,6 +48,7 @@ public final class ModRegistries {
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, MODID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, MODID);
     public static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
@@ -90,6 +94,8 @@ public final class ModRegistries {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IceboxBlockEntity>> ICEBOX_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("icebox",
                     () -> BlockEntityType.Builder.of(IceboxBlockEntity::new, ICEBOX.get()).build(null));
+    public static final DeferredHolder<MenuType<?>, MenuType<IceboxMenu>> ICEBOX_MENU =
+            MENUS.register("icebox", () -> new MenuType<>(IceboxMenu::new, FeatureFlags.DEFAULT_FLAGS));
 
     public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<DishAssemblyRecipe>>
             DISH_ASSEMBLY = RECIPE_SERIALIZERS.register("dish_assembly",
@@ -114,6 +120,7 @@ public final class ModRegistries {
         ITEMS.register(modBus);
         BLOCKS.register(modBus);
         BLOCK_ENTITIES.register(modBus);
+        MENUS.register(modBus);
         RECIPE_SERIALIZERS.register(modBus);
         TABS.register(modBus);
     }
