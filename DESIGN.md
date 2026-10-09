@@ -68,6 +68,10 @@ sees the real numbers.
 Dishes don't last forever.
 
 - Base shelf life is **3 in-game days**. Clove doubles it, garlic adds 50%, and they stack.
+- **Perishable** ingredients (meat, fish, milk, eggs) halve it. They're the item tag
+  `stevespantry:perishable`, built from the shared `c:` tags (`c:foods/raw_meat`,
+  `c:foods/cooked_fish`, `c:drinks/milk`, `c:eggs` and so on), so other mods' meat counts too.
+  Perishable dishes say so in their tooltip.
 - The clock is world game time, so food doesn't rot while the server is off, but does rot in chests.
 - A freshness bar sits where a tool's durability bar would, green to red.
 - **Fresh** (more than half left): full nutrition and every spice effect (1 minute each).
@@ -75,12 +79,20 @@ Dishes don't last forever.
 - **Spoiled**: turns into **Spoiled Leftovers** in your inventory (1 hunger, likely Hunger and
   maybe Nausea). A spoiled dish pulled from a chest turns the next tick.
 
+### Icebox
+
+An unpowered, chest-sized (27 slot) block. Dishes inside spoil **3x slower**, so a perishable
+dish kept cold outlasts a dry one left on the shelf. Recipe: planks in the corners, iron ingots
+on the edges, packed ice in the middle. It works by giving back two thirds of the elapsed time to
+each dish's freshness once a second, measured from its last chill (saved with the block), so it
+keeps working while its chunk is unloaded. Hoppers and comparators work like a chest.
+
 ## Next steps
 
 1. Grow the rare spices ourselves (other mods can already supply them through `c:` tags): saffron crocus, cumin, turmeric, cardamom crops; clove and star anise trees.
 2. Tint the dish texture from its ingredients, like Tinkers' part colours.
 3. Signature combos: named recipes (curry, chai, pumpkin spice) that give bonus effects when a dish
    has the right spice set.
-4. Ways to slow spoilage: a pantry/cellar block, salting with HarvestCraft salt, an icebox.
+4. More ways to slow spoilage: a powered fridge, a pantry/cellar block, salting with HarvestCraft salt.
 5. Config for shelf life and effect lengths.
 6. JEI/EMI page for dish assembly.

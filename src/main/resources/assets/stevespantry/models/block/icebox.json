@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "stevespantry:block/icebox_top",
+    "bottom": "stevespantry:block/icebox_bottom",
+    "side": "stevespantry:block/icebox_side"
+  }
+}

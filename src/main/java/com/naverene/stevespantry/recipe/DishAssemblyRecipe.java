@@ -1,6 +1,7 @@
 package com.naverene.stevespantry.recipe;
 
 import com.naverene.stevespantry.ModRegistries;
+import com.naverene.stevespantry.ModTags;
 import com.naverene.stevespantry.Spice;
 import com.naverene.stevespantry.component.DishContents;
 import com.naverene.stevespantry.component.Freshness;
@@ -59,6 +60,9 @@ public class DishAssemblyRecipe extends CustomRecipe {
         long distinct = parsed.foods.stream().map(ItemStack::getItem).distinct().count();
         nutrition += (int) (distinct - 1); // variety bonus: +1 per different ingredient beyond the first
         float shelfLife = DishItem.BASE_SHELF_LIFE;
+        if (parsed.foods.stream().anyMatch(food -> food.is(ModTags.PERISHABLE))) {
+            shelfLife *= DishItem.PERISHABLE_MULTIPLIER;
+        }
         for (Spice spice : parsed.spices) {
             saturation += spice.bonusSaturation();
             shelfLife *= spice.shelfLifeMultiplier();

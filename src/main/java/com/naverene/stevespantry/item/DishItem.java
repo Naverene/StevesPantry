@@ -1,6 +1,7 @@
 package com.naverene.stevespantry.item;
 
 import com.naverene.stevespantry.ModRegistries;
+import com.naverene.stevespantry.ModTags;
 import com.naverene.stevespantry.PantryClock;
 import com.naverene.stevespantry.Spice;
 import com.naverene.stevespantry.reference.Reference;
@@ -33,6 +34,8 @@ import org.jetbrains.annotations.Nullable;
 public class DishItem extends Item {
     /** Three in-game days. Spices like clove and garlic stretch this. */
     public static final long BASE_SHELF_LIFE = 3 * 24000L;
+    /** Dishes with meat, fish, milk or eggs in them keep half as long. An icebox makes up for it. */
+    public static final float PERISHABLE_MULTIPLIER = 0.5F;
     /** How long a fresh dish's spice effects last. */
     private static final int SPICE_EFFECT_TICKS = 20 * 60;
 
@@ -150,6 +153,9 @@ public class DishItem extends Item {
             tooltip.add(Component.translatable(key + "stage." + stage.name().toLowerCase(),
                     formatDays(ticksLeft)).withStyle(color));
         }
+        if (isPerishable(contents)) {
+            tooltip.add(Component.translatable(key + "perishable").withStyle(ChatFormatting.AQUA));
+        }
 
         tooltip.add(Component.translatable(key + "ingredients").withStyle(ChatFormatting.GRAY));
         for (Item ingredient : contents.ingredients()) {
@@ -165,6 +171,10 @@ public class DishItem extends Item {
                 tooltip.add(Component.literal("    ").append(describeSpiceBonus(spice)).withStyle(ChatFormatting.BLUE));
             }
         }
+    }
+
+    public static boolean isPerishable(DishContents contents) {
+        return contents.ingredients().stream().anyMatch(item -> item.getDefaultInstance().is(ModTags.PERISHABLE));
     }
 
     /** One line saying what a spice adds to a dish. */
