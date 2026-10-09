@@ -81,11 +81,19 @@ Dishes don't last forever.
 
 ### Icebox
 
-An unpowered, chest-sized (27 slot) block. Dishes inside spoil **3x slower**, so a perishable
-dish kept cold outlasts a dry one left on the shelf. Recipe: planks in the corners, iron ingots
-on the edges, packed ice in the middle. It works by giving back two thirds of the elapsed time to
-each dish's freshness once a second, measured from its last chill (saved with the block), so it
-keeps working while its chunk is unloaded. Hoppers and comparators work like a chest.
+An unpowered, chest-sized block: 27 food slots plus a separate **ice slot** in a side panel with
+a cold gauge. Dishes inside spoil **3x slower** while there's ice, so a perishable dish kept cold
+outlasts a dry one left on the shelf. Recipe: planks in the corners, iron ingots on the edges,
+packed ice in the middle.
+
+- **Ice** melts like furnace fuel, and only while there's a dish inside. Each item is worth some
+  chilling time: snowball 1/4 day, snow block or ice 1 day, packed ice 9 days, blue ice 81 days.
+  With no ice left, dishes spoil at the normal rate. Hovering the gauge shows the days left.
+- It works by giving back two thirds of the chilled time to each dish's freshness once a second,
+  measured from its last chill (saved with the block), so it keeps working while its chunk is
+  unloaded, melting ice for that time too.
+- Hoppers above or below reach the food slots; hoppers on the sides feed the ice slot (and can't
+  pull ice out). Comparators work like a chest.
 
 ### Walk-in Freezer
 
