@@ -33,8 +33,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * The walk-in freezer's brain. It sits in the middle of one side of a 3x3x3 shell, facing out,
- * with the hollow middle block directly behind it.
+ * The walk-in freezer's brain. It sits in the middle of one wall of a hollow cube, facing out:
+ * 5x5x5 for a walk-in freezer, or 3x3x3 for a compact one.
  */
 public class FreezerControllerBlock extends BaseEntityBlock {
     public static final MapCodec<FreezerControllerBlock> CODEC = simpleCodec(FreezerControllerBlock::new);

@@ -94,12 +94,15 @@ A powered multiblock, GregTech style but with no GregTech dependency. Dishes ins
 trick as the Icebox (`block/Chiller.java`, shared by both), so it also keeps working while unloaded,
 as long as it had the power to cover that time.
 
-- **Shape**: a 3x3x3 cube with an empty middle. The **Controller** sits in the middle of one side,
-  facing out. The other 25 blocks are **Freezer Casing**, or any mix of buses and hatches.
+- **Shape**: a hollow cube. The walk-in size is **5x5x5** with a 3x3x3 room inside; a compact
+  **3x3x3** with one empty block inside also works. The **Controller** sits in the middle of one
+  wall, facing out. The rest of the shell is **Freezer Casing**, or any mix of buses and hatches.
+  A walk-in freezer can have doors (any door) in its side walls, anywhere but the edges. The
+  inside must be open space: air, or things you can walk through like torches and signs.
 - Only the controller, buses and hatches have block entities (they hold items or energy). Casing
   is a plain block.
 - **Controller**: 54 slots of cold storage (a double chest). Right-click opens it, or says what's
-  wrong with the shell (wrong block, middle not empty, no energy hatch). It re-checks the shell
+  wrong with the shell (wrong block, inside not open, no energy hatch). It re-checks the shell
   once a second.
 - **Energy Hatch** (at least one): takes Forge Energy (FE) from any cable, stores 100,000 FE,
   accepts up to 1,000 FE/t. The freezer draws **20 FE/t**, only while there's food inside.

@@ -45,13 +45,13 @@
   "container.stevespantry.freezer_output_bus": "Freezer Output Bus",
   "tooltip.stevespantry.freezer_controller": "Dishes inside spoil %sx slower while powered",
   "tooltip.stevespantry.freezer_controller.power": "Uses %s FE/t while food is inside",
-  "tooltip.stevespantry.freezer_controller.shape": "Center of one side of a hollow 3x3x3 of Freezer Casing, with at least one Energy Hatch",
+  "tooltip.stevespantry.freezer_controller.shape": "Center of one wall of a hollow 5x5x5 (walk-in, doors allowed) or 3x3x3 cube of Freezer Casing, with at least one Energy Hatch",
   "tooltip.stevespantry.freezer_input_bus": "Hoppers and pipes put food in; the freezer pulls it into storage",
   "tooltip.stevespantry.freezer_output_bus": "Kept stocked from the freezer's storage for hoppers and pipes to pull",
   "tooltip.stevespantry.freezer_energy_hatch": "Stores %s FE, takes up to %s FE/t",
   "message.stevespantry.energy_hatch": "%s / %s FE",
   "message.stevespantry.freezer.unloaded": "Part of the freezer is in an unloaded chunk",
-  "message.stevespantry.freezer.not_hollow": "The middle of the freezer must be empty (found %s)",
+  "message.stevespantry.freezer.not_hollow": "The inside of the freezer must be open space (found %s at %s, %s, %s)",
   "message.stevespantry.freezer.wrong_block": "%s at %s, %s, %s doesn't belong in the freezer's walls",
   "message.stevespantry.freezer.no_energy": "The freezer needs at least one Energy Hatch in its walls"
 }

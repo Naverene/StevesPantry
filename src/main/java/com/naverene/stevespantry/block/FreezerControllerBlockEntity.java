@@ -5,10 +5,12 @@ import com.naverene.stevespantry.reference.Reference;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -36,6 +38,8 @@ public class FreezerControllerBlockEntity extends BaseContainerBlockEntity {
     public static final int SLOWDOWN = 10;
     /** Power drawn per tick while chilling food. */
     public static final int FE_PER_TICK = 20;
+    public static final int WALK_IN_SIZE = 5;
+    public static final int COMPACT_SIZE = 3;
 
     private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     private final Chiller chiller = new Chiller(SLOWDOWN);
@@ -50,15 +54,28 @@ public class FreezerControllerBlockEntity extends BaseContainerBlockEntity {
     public record Parts(List<FreezerBusBlockEntity> inputs, List<FreezerBusBlockEntity> outputs,
                         List<FreezerEnergyHatchBlockEntity> hatches) {}
 
-    public BlockPos center() {
-        return worldPosition.relative(getBlockState().getValue(FreezerControllerBlock.FACING).getOpposite());
+    /**
+     * Checks the shell. The freezer is either the walk-in size (5x5x5, a 3x3x3 room inside) or the
+     * compact size (3x3x3, one empty block inside). Which one is meant is read from the block two
+     * behind the controller: that's the far wall of a compact freezer but open floor space in a
+     * walk-in one.
+     */
+    public Scan scan() {
+        Direction back = getBlockState().getValue(FreezerControllerBlock.FACING).getOpposite();
+        BlockPos probe = worldPosition.relative(back, 2);
+        if (!level.isLoaded(probe)) {
+            return new Scan(null, message("unloaded"), true);
+        }
+        boolean walkIn = isOpen(probe);
+        return scan(walkIn ? WALK_IN_SIZE : COMPACT_SIZE);
     }
 
-    public Scan scan() {
-        Level level = this.level;
-        BlockPos center = center();
+    private Scan scan(int size) {
+        int half = size / 2;
+        Direction back = getBlockState().getValue(FreezerControllerBlock.FACING).getOpposite();
+        BlockPos center = worldPosition.relative(back, half);
         Parts parts = new Parts(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-1, -1, -1), center.offset(1, 1, 1))) {
+        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-half, -half, -half), center.offset(half, half, half))) {
             if (pos.equals(worldPosition)) {
                 continue;
             }
@@ -66,13 +83,22 @@ public class FreezerControllerBlockEntity extends BaseContainerBlockEntity {
                 return new Scan(null, message("unloaded"), true);
             }
             BlockState state = level.getBlockState(pos);
-            if (pos.equals(center)) {
-                if (!state.isAir()) {
-                    return new Scan(null, message("not_hollow", state.getBlock().getName()), false);
+            int dx = Math.abs(pos.getX() - center.getX());
+            int dy = Math.abs(pos.getY() - center.getY());
+            int dz = Math.abs(pos.getZ() - center.getZ());
+            int faces = (dx == half ? 1 : 0) + (dy == half ? 1 : 0) + (dz == half ? 1 : 0);
+            if (faces == 0) {
+                if (!isOpen(pos)) {
+                    return new Scan(null, message("not_hollow", state.getBlock().getName(),
+                            pos.getX(), pos.getY(), pos.getZ()), false);
                 }
                 continue;
             }
             if (state.is(ModRegistries.FREEZER_CASING.get())) {
+                continue;
+            }
+            // A walk-in freezer needs a way in: doors may go anywhere in a side wall except its edges.
+            if (size == WALK_IN_SIZE && faces == 1 && dy < half && state.is(BlockTags.DOORS)) {
                 continue;
             }
             BlockEntity entity = level.getBlockEntity(pos);
@@ -89,6 +115,11 @@ public class FreezerControllerBlockEntity extends BaseContainerBlockEntity {
             return new Scan(null, message("no_energy"), false);
         }
         return new Scan(parts, Component.empty(), false);
+    }
+
+    /** Inside space must be walkable: air, or things without collision like torches and signs. */
+    private boolean isOpen(BlockPos pos) {
+        return level.getBlockState(pos).getCollisionShape(level, pos).isEmpty();
     }
 
     private static Component message(String key, Object... args) {
