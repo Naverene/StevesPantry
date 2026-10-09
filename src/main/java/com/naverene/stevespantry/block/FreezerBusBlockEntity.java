@@ -3,51 +3,43 @@ package com.naverene.stevespantry.block;
 import com.naverene.stevespantry.ModRegistries;
 import com.naverene.stevespantry.reference.Reference;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.DispenserMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
-/**
- * A chest-sized cold box: dishes inside age at a third of the normal rate. The slowdown itself
- * lives in {@link Chiller}, shared with the walk-in freezer.
- */
-public class IceboxBlockEntity extends BaseContainerBlockEntity {
-    public static final int SIZE = 27;
-    /** Dishes inside spoil this many times slower. */
-    public static final int SLOWDOWN = 3;
+/** Nine slots. Automation can only insert into an input bus and only extract from an output bus. */
+public class FreezerBusBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
+    public static final int SIZE = 9;
+    private static final int[] SLOTS = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
     private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
-    private final Chiller chiller = new Chiller(SLOWDOWN);
 
-    public IceboxBlockEntity(BlockPos pos, BlockState state) {
-        super(ModRegistries.ICEBOX_BLOCK_ENTITY.get(), pos, state);
+    public FreezerBusBlockEntity(BlockPos pos, BlockState state) {
+        super(ModRegistries.FREEZER_BUS_BLOCK_ENTITY.get(), pos, state);
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, IceboxBlockEntity icebox) {
-        long now = level.getGameTime();
-        long elapsed = icebox.chiller.due(now);
-        if (elapsed > 0) {
-            Chiller.chill(icebox.items, icebox.chiller.refund(now, elapsed), now);
-            icebox.setChanged();
-        }
+    public boolean isOutput() {
+        return getBlockState().getBlock() instanceof FreezerBusBlock bus && bus.isOutput();
     }
 
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("container." + Reference.MODID + ".icebox");
+        return Component.translatable("container." + Reference.MODID + (isOutput() ? ".freezer_output_bus" : ".freezer_input_bus"));
     }
 
     @Override
-    protected NonNullList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return items;
     }
 
@@ -63,7 +55,22 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
-        return ChestMenu.threeRows(containerId, inventory, this);
+        return new DispenserMenu(containerId, inventory, this);
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction side) {
+        return !isOutput();
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction side) {
+        return isOutput();
     }
 
     @Override
@@ -71,13 +78,11 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity {
         super.loadAdditional(tag, registries);
         items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, items, registries);
-        chiller.load(tag);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         ContainerHelper.saveAllItems(tag, items, registries);
-        chiller.save(tag);
     }
 }

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "stevespantry:block/freezer_input_bus"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "stevespantry:block/freezer_controller"
+    },
+    "facing=east": {
+      "model": "stevespantry:block/freezer_controller",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "stevespantry:block/freezer_controller",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "stevespantry:block/freezer_controller",
+      "y": 270
+    }
+  }
+}

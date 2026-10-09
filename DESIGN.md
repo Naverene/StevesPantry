@@ -87,12 +87,38 @@ on the edges, packed ice in the middle. It works by giving back two thirds of th
 each dish's freshness once a second, measured from its last chill (saved with the block), so it
 keeps working while its chunk is unloaded. Hoppers and comparators work like a chest.
 
+### Walk-in Freezer
+
+A powered multiblock, GregTech style but with no GregTech dependency. Dishes inside spoil
+**10x slower** while it has power (the Icebox is 3x). It uses the same refund-the-elapsed-time
+trick as the Icebox (`block/Chiller.java`, shared by both), so it also keeps working while unloaded,
+as long as it had the power to cover that time.
+
+- **Shape**: a 3x3x3 cube with an empty middle. The **Controller** sits in the middle of one side,
+  facing out. The other 25 blocks are **Freezer Casing**, or any mix of buses and hatches.
+- Only the controller, buses and hatches have block entities (they hold items or energy). Casing
+  is a plain block.
+- **Controller**: 54 slots of cold storage (a double chest). Right-click opens it, or says what's
+  wrong with the shell (wrong block, middle not empty, no energy hatch). It re-checks the shell
+  once a second.
+- **Energy Hatch** (at least one): takes Forge Energy (FE) from any cable, stores 100,000 FE,
+  accepts up to 1,000 FE/t. The freezer draws **20 FE/t**, only while there's food inside.
+  Right-click shows the charge. Without power, or with a broken shell, it's just a big box.
+- **Input Bus** (optional, 9 slots): hoppers and pipes can insert but not extract; the controller
+  pulls everything into storage.
+- **Output Bus** (optional, 9 slots): hoppers and pipes can extract but not insert; the controller
+  keeps it stocked from storage.
+- Food in the buses is chilled too.
+- Recipes: 5 iron + 4 packed ice make 4 casings; the controller is an Icebox and a comparator in a
+  ring of casing; buses are a hopper above (input) or below (output) a casing; the energy hatch is a
+  redstone block on a casing.
+
 ## Next steps
 
 1. Grow the rare spices ourselves (other mods can already supply them through `c:` tags): saffron crocus, cumin, turmeric, cardamom crops; clove and star anise trees.
 2. Tint the dish texture from its ingredients, like Tinkers' part colours.
 3. Signature combos: named recipes (curry, chai, pumpkin spice) that give bonus effects when a dish
    has the right spice set.
-4. More ways to slow spoilage: a powered fridge, a pantry/cellar block, salting with HarvestCraft salt.
+4. More ways to slow spoilage: a pantry/cellar block, salting with HarvestCraft salt.
 5. Config for shelf life and effect lengths.
 6. JEI/EMI page for dish assembly.
