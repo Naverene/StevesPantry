@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#c:crops/clove",
+      "required": false
+    },
+    {
+      "id": "#c:fruits/clove",
+      "required": false
+    },
+    {
+      "id": "#c:spices/clove",
+      "required": false
+    }
+  ]
+}
