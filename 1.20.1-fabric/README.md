@@ -46,3 +46,38 @@ Needs Fabric API. Pam's HarvestCraft 2 (Fabric) is optional.
 - **Icebox**: 1.20.1's `BaseContainerBlockEntity` doesn't manage an item list, so
   `IceboxBlockEntity` implements the container methods itself; drops contents in `onRemove`
   the way vanilla furnaces do. The screen calls `renderBackground` itself (1.20.1 doesn't).
+
+## API
+
+The same API as main (see the repo root's [API.md](../API.md)): package
+`com.naverene.stevespantry.api`, `StevesPantryApi.get()` / `isAvailable()`, `VERSION = 1`, same
+method names and behaviour. Registered spice items count in the dish recipe, shelf-life modifiers
+run on every assembled dish (crafting grid and `makeDish`), and registered coolants work in the
+Icebox, overriding the built-in snow/ice values.
+
+`./gradlew build` also writes `build/libs/stevespantry-1.20.1-fabric-<version>-api.jar` (API
+classes plus sources, remapped to intermediary like the main jar), so addons depend on it with
+Loom's `modCompileOnly` and put the full jar on `modRuntimeOnly`:
+
+```groovy
+dependencies {
+    modCompileOnly files('libs/stevespantry-1.20.1-fabric-0.1.0-api.jar')
+    modRuntimeOnly files('libs/stevespantry-1.20.1-fabric-0.1.0.jar')
+}
+```
+
+```java
+// In your ModInitializer#onInitialize (Fabric has no mod construction / common setup split).
+if (StevesPantryApi.isAvailable()) {
+    IPantryApi pantry = StevesPantryApi.get();
+    pantry.registerCoolant(MyItems.FREEZER_PACK, 48000);
+    pantry.spice("chili").ifPresent(chili -> pantry.registerSpiceItem(MyItems.CHILI_POWDER, chili));
+}
+```
+
+Differences from main's API, all from 1.20.1 itself:
+
+- `ISpice.effect()` returns a `MobEffect` (1.20.1 has no `Holder<MobEffect>` for effects).
+- Dish data is NBT, not data components, so `ages(stack)` means the stack has a `shelf_life` tag
+  and `dish(stack)` reads the `ingredients`/`spices` tags; the results are the same.
+- `perishableTag()` is the same `stevespantry:perishable` item tag (data folder `tags/items/`).
