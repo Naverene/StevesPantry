@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:sesameseedsitem",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/sesame",
+      "required": false
+    },
+    {
+      "id": "#forge:seeds/sesame",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/sesame_seeds",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/sesame",
+      "required": false
+    }
+  ]
+}

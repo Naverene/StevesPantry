@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:chilipepperitem",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/chilipepper",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/chili_pepper",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/chili",
+      "required": false
+    },
+    {
+      "id": "#forge:vegetables/chili_pepper",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/chili",
+      "required": false
+    }
+  ]
+}

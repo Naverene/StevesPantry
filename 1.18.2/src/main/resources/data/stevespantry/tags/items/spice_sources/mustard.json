@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:mustardseedsitem",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/mustard",
+      "required": false
+    },
+    {
+      "id": "#forge:seeds/mustard",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/mustard_seeds",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/mustard",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#forge:crops/clove",
+      "required": false
+    },
+    {
+      "id": "#forge:fruits/clove",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/clove",
+      "required": false
+    }
+  ]
+}
