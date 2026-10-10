@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pamhc2crops:gingeritem",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/ginger",
+      "required": false
+    },
+    {
+      "id": "#forge:vegetables/ginger",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/ginger",
+      "required": false
+    },
+    {
+      "id": "#forge:ginger",
+      "required": false
+    },
+    {
+      "id": "#forge:gingers",
+      "required": false
+    }
+  ]
+}
