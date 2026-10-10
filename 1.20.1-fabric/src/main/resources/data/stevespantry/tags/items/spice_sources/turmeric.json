@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:crops/turmeric",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/turmeric",
+      "required": false
+    },
+    {
+      "id": "#c:spices/turmeric",
+      "required": false
+    },
+    {
+      "id": "#c:turmeric",
+      "required": false
+    }
+  ]
+}

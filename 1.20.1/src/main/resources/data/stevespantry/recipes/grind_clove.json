@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "stevespantry:spice_sources/clove"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "stevespantry:mortar_and_pestle"
+    },
+    {
+      "tag": "stevespantry:spice_sources/clove"
+    }
+  ],
+  "result": {
+    "item": "stevespantry:clove",
+    "count": 2
+  }
+}

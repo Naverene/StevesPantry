@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PIP",
+    "ICI",
+    "PIP"
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "I": "minecraft:iron_ingot",
+    "C": "minecraft:packed_ice"
+  },
+  "result": {
+    "id": "stevespantry:icebox",
+    "count": 1
+  }
+}

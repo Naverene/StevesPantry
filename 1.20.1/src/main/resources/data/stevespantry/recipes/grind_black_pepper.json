@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "stevespantry:spice_sources/black_pepper"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "stevespantry:mortar_and_pestle"
+    },
+    {
+      "tag": "stevespantry:spice_sources/black_pepper"
+    }
+  ],
+  "result": {
+    "item": "stevespantry:black_pepper",
+    "count": 2
+  }
+}

@@ -1,0 +1,48 @@
+plugins {
+    id 'java-library'
+    id 'com.gtnewhorizons.retrofuturagradle' version '1.4.9'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+// Gradle itself runs on a modern JDK; Minecraft 1.7.10 is compiled and run on Java 8.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+        // Azul covers the most platforms for Java 8 toolchains.
+        vendor = JvmVendorSpec.AZUL
+    }
+}
+
+// RFG wires in Forge 10.13.4.1614 (the last 1.7.10 Forge) for 1.7.10.
+minecraft {
+    mcVersion = minecraft_version
+    mcpMappingChannel = mcp_mappings_channel
+    mcpMappingVersion = mcp_mappings_version
+    username = 'Developer'
+}
+
+repositories {
+    maven {
+        name = 'GTNH Maven'
+        url = 'https://nexus.gtnewhorizons.com/repository/public/'
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('processResources') {
+    def props = [version: mod_version, mcversion: minecraft_version, name: mod_name]
+    inputs.properties(props)
+    filesMatching('mcmod.info') {
+        expand(props)
+    }
+}
+

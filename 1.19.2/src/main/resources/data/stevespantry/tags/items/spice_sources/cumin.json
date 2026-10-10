@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:crops/cumin",
+      "required": false
+    },
+    {
+      "id": "#forge:seeds/cumin",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/cumin",
+      "required": false
+    },
+    {
+      "id": "#forge:cumin",
+      "required": false
+    }
+  ]
+}

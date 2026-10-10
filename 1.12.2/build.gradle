@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.gtnewhorizons.retrofuturagradle' version "${rfg_version}"
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+        // Azul ships Java 8 for every platform, including macOS arm64.
+        vendor = JvmVendorSpec.AZUL
+    }
+}
+
+minecraft {
+    mcVersion = minecraft_version
+    mcpMappingChannel = mapping_channel
+    mcpMappingVersion = mapping_version
+    username = 'Developer'
+    extraRunJvmArguments.add('-ea:' + project.group)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    def props = [version: project.version, mcversion: minecraft_version, name: mod_name, modid: mod_id]
+    inputs.properties props
+    filesMatching('mcmod.info') {
+        expand props
+    }
+}

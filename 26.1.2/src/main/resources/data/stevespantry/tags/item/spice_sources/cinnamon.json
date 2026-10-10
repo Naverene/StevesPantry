@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "pamhc2trees:cinnamonitem",
+      "required": false
+    },
+    {
+      "id": "#c:fruits/cinnamon",
+      "required": false
+    },
+    {
+      "id": "#c:crops/cinnamon",
+      "required": false
+    },
+    {
+      "id": "#c:spices/cinnamon",
+      "required": false
+    }
+  ]
+}

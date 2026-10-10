@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "pamhc2trees:peppercornitem",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/peppercorn",
+      "required": false
+    },
+    {
+      "id": "#forge:fruits/peppercorn",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/black_pepper",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/black_pepper",
+      "required": false
+    }
+  ]
+}

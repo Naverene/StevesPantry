@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pamhc2crops:mustardseedsitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/mustard",
+      "required": false
+    },
+    {
+      "id": "#c:seeds/mustard",
+      "required": false
+    },
+    {
+      "id": "#c:crops/mustard_seeds",
+      "required": false
+    },
+    {
+      "id": "#c:spices/mustard",
+      "required": false
+    },
+    {
+      "id": "#c:mustard",
+      "required": false
+    },
+    {
+      "id": "#c:mustard_seeds",
+      "required": false
+    }
+  ]
+}

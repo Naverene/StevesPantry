@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#c:crops/cumin",
+      "required": false
+    },
+    {
+      "id": "#c:seeds/cumin",
+      "required": false
+    },
+    {
+      "id": "#c:spices/cumin",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#forge:crops/turmeric",
+      "required": false
+    },
+    {
+      "id": "#forge:vegetables/turmeric",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/turmeric",
+      "required": false
+    }
+  ]
+}

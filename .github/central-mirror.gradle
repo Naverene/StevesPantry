@@ -1,0 +1,13 @@
+// CI only: fetch Maven Central artifacts through Google's mirror. Central answers some GitHub
+// runners with 403/429, which fails dependency resolution for whole builds.
+def mirror = 'https://maven-central.storage-download.googleapis.com/maven2/'
+def redirect = { RepositoryHandler repos ->
+    repos.withType(MavenArtifactRepository).configureEach { r ->
+        def url = r.url.toString()
+        if (url.startsWith('https://repo.maven.apache.org') || url.startsWith('https://repo1.maven.org')) {
+            r.url = mirror
+        }
+    }
+}
+settingsEvaluated { s -> redirect(s.pluginManagement.repositories) }
+allprojects { p -> redirect(p.repositories); p.buildscript { redirect(repositories) } }

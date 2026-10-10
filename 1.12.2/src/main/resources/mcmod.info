@@ -1,0 +1,15 @@
+[
+  {
+    "modid": "${modid}",
+    "name": "${name}",
+    "description": "Spices from around the world and dishes you assemble yourself, Tinkers' style. Dishes go stale and spoil, so cook what you'll eat. Pairs with Pam's HarvestCraft.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "authorList": ["awweaver"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

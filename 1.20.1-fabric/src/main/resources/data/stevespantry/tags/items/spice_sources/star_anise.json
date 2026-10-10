@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:crops/star_anise",
+      "required": false
+    },
+    {
+      "id": "#c:fruits/star_anise",
+      "required": false
+    },
+    {
+      "id": "#c:spices/star_anise",
+      "required": false
+    },
+    {
+      "id": "#c:star_anise",
+      "required": false
+    },
+    {
+      "id": "#c:staranise",
+      "required": false
+    }
+  ]
+}

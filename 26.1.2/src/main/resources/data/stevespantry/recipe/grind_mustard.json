@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "stevespantry:spice_sources/mustard"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "stevespantry:mortar_and_pestle",
+    "#stevespantry:spice_sources/mustard"
+  ],
+  "result": {
+    "id": "stevespantry:mustard",
+    "count": 2
+  }
+}
