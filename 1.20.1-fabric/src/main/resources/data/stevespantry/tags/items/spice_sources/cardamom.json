@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:crops/cardamom",
+      "required": false
+    },
+    {
+      "id": "#c:seeds/cardamom",
+      "required": false
+    },
+    {
+      "id": "#c:spices/cardamom",
+      "required": false
+    },
+    {
+      "id": "#c:cardamom",
+      "required": false
+    }
+  ]
+}

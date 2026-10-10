@@ -1,0 +1,69 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:beef",
+    "minecraft:cooked_beef",
+    "minecraft:porkchop",
+    "minecraft:cooked_porkchop",
+    "minecraft:mutton",
+    "minecraft:cooked_mutton",
+    "minecraft:chicken",
+    "minecraft:cooked_chicken",
+    "minecraft:rabbit",
+    "minecraft:cooked_rabbit",
+    {
+      "id": "#minecraft:fishes",
+      "required": false
+    },
+    "minecraft:milk_bucket",
+    "minecraft:egg",
+    {
+      "id": "#c:raw_meats",
+      "required": false
+    },
+    {
+      "id": "#c:cooked_meats",
+      "required": false
+    },
+    {
+      "id": "#c:raw_fishes",
+      "required": false
+    },
+    {
+      "id": "#c:cooked_fishes",
+      "required": false
+    },
+    {
+      "id": "#c:milk",
+      "required": false
+    },
+    {
+      "id": "#c:milk_buckets",
+      "required": false
+    },
+    {
+      "id": "#c:eggs",
+      "required": false
+    },
+    {
+      "id": "#c:foods/raw_meat",
+      "required": false
+    },
+    {
+      "id": "#c:foods/cooked_meat",
+      "required": false
+    },
+    {
+      "id": "#c:foods/raw_fish",
+      "required": false
+    },
+    {
+      "id": "#c:foods/cooked_fish",
+      "required": false
+    },
+    {
+      "id": "#c:drinks/milk",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:bellpepperitem",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/bellpepper",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/bell_pepper",
+      "required": false
+    },
+    {
+      "id": "#forge:vegetables/bell_pepper",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/paprika",
+      "required": false
+    },
+    {
+      "id": "#c:crops/bellpepper",
+      "required": false
+    },
+    {
+      "id": "#c:crops/bell_pepper",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/bell_pepper",
+      "required": false
+    },
+    {
+      "id": "#c:spices/paprika",
+      "required": false
+    }
+  ]
+}

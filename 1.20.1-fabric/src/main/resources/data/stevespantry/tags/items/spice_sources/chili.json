@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pamhc2crops:chilipepperitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/chilipepper",
+      "required": false
+    },
+    {
+      "id": "#c:crops/chili_pepper",
+      "required": false
+    },
+    {
+      "id": "#c:crops/chili",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/chili_pepper",
+      "required": false
+    },
+    {
+      "id": "#c:spices/chili",
+      "required": false
+    },
+    {
+      "id": "#c:chili_peppers",
+      "required": false
+    },
+    {
+      "id": "#c:chile_peppers",
+      "required": false
+    }
+  ]
+}

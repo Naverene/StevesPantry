@@ -1,0 +1,32 @@
+{
+  "values": [
+    {
+      "id": "pamhc2crops:garlicitem",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/garlic",
+      "required": false
+    },
+    {
+      "id": "#forge:vegetables/garlic",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/garlic",
+      "required": false
+    },
+    {
+      "id": "#c:crops/garlic",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/garlic",
+      "required": false
+    },
+    {
+      "id": "#c:spices/garlic",
+      "required": false
+    }
+  ]
+}

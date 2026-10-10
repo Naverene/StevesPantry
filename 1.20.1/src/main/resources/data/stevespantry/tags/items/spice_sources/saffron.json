@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "#forge:crops/saffron",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/saffron",
+      "required": false
+    },
+    {
+      "id": "#c:crops/saffron",
+      "required": false
+    },
+    {
+      "id": "#c:spices/saffron",
+      "required": false
+    }
+  ]
+}

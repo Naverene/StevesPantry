@@ -1,0 +1,15 @@
+[
+{
+  "modid": "stevespantry",
+  "name": "${name}",
+  "description": "Spices, player-assembled dishes that spoil, and an icebox to keep them. Built to sit alongside Pam's HarvestCraft.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "authorList": ["awweaver"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

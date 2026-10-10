@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#c:crops/saffron",
+      "required": false
+    },
+    {
+      "id": "#c:spices/saffron",
+      "required": false
+    }
+  ]
+}

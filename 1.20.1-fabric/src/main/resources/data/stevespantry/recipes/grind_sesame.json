@@ -1,0 +1,25 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "stevespantry:spice_sources/sesame"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "stevespantry:mortar_and_pestle"
+    },
+    {
+      "tag": "stevespantry:spice_sources/sesame"
+    }
+  ],
+  "result": {
+    "item": "stevespantry:sesame",
+    "count": 2
+  }
+}

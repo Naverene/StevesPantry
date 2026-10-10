@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pamhc2trees:nutmegitem",
+      "required": false
+    },
+    {
+      "id": "#c:fruits/nutmeg",
+      "required": false
+    },
+    {
+      "id": "#c:crops/nutmeg",
+      "required": false
+    },
+    {
+      "id": "#c:spices/nutmeg",
+      "required": false
+    },
+    {
+      "id": "#c:nutmegs",
+      "required": false
+    }
+  ]
+}

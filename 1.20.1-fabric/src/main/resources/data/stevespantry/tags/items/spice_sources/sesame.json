@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "pamhc2crops:sesameseedsitem",
+      "required": false
+    },
+    {
+      "id": "#c:crops/sesame",
+      "required": false
+    },
+    {
+      "id": "#c:seeds/sesame",
+      "required": false
+    },
+    {
+      "id": "#c:crops/sesame_seeds",
+      "required": false
+    },
+    {
+      "id": "#c:spices/sesame",
+      "required": false
+    },
+    {
+      "id": "#c:sesame",
+      "required": false
+    },
+    {
+      "id": "#c:sesame_seeds",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "stevespantry:spice_sources/turmeric"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "stevespantry:mortar_and_pestle"
+    },
+    {
+      "tag": "stevespantry:spice_sources/turmeric"
+    }
+  ],
+  "result": {
+    "item": "stevespantry:turmeric",
+    "count": 2
+  }
+}

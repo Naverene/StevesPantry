@@ -1,0 +1,51 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.148'
+}
+
+version = "${minecraft_version}-${mod_version}"
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+legacyForge {
+    version = "${minecraft_version}-${forge_version}"
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+tasks.named('processResources', ProcessResources) {
+    def props = [mod_id: mod_id, mod_name: mod_name, mod_version: mod_version,
+                 minecraft_version: minecraft_version, forge_version: forge_version]
+    inputs.properties(props)
+    filesMatching('META-INF/mods.toml') {
+        expand(props)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
