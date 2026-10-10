@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "#forge:crops/cardamom",
+      "required": false
+    },
+    {
+      "id": "#forge:seeds/cardamom",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/cardamom",
+      "required": false
+    },
+    {
+      "id": "#c:crops/cardamom",
+      "required": false
+    },
+    {
+      "id": "#c:seeds/cardamom",
+      "required": false
+    },
+    {
+      "id": "#c:spices/cardamom",
+      "required": false
+    }
+  ]
+}

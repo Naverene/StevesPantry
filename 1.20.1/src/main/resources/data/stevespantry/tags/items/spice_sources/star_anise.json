@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "#forge:crops/star_anise",
+      "required": false
+    },
+    {
+      "id": "#forge:fruits/star_anise",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/star_anise",
+      "required": false
+    },
+    {
+      "id": "#c:crops/star_anise",
+      "required": false
+    },
+    {
+      "id": "#c:fruits/star_anise",
+      "required": false
+    },
+    {
+      "id": "#c:spices/star_anise",
+      "required": false
+    }
+  ]
+}
