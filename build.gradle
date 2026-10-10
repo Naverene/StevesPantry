@@ -40,3 +40,17 @@ neoForge {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+
+// Just the public API (classes and sources), for addon authors to compile against.
+tasks.register('apiJar', Jar) {
+    archiveClassifier = 'api'
+    from(sourceSets.main.output) {
+        include 'com/naverene/stevespantry/api/**'
+    }
+    from(sourceSets.main.allJava) {
+        include 'com/naverene/stevespantry/api/**'
+    }
+}
+tasks.named('assemble') {
+    dependsOn 'apiJar'
+}
