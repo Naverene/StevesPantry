@@ -90,7 +90,8 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity implements World
     }
 
     public static int coolantTicks(ItemStack stack) {
-        return COOLANTS.getOrDefault(stack.getItem(), 0);
+        Integer registered = com.naverene.stevespantry.PantryApiImpl.INSTANCE.registeredCoolant(stack.getItem());
+        return registered != null ? registered : COOLANTS.getOrDefault(stack.getItem(), 0);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, IceboxBlockEntity icebox) {

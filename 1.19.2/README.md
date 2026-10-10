@@ -47,3 +47,36 @@ Pam's HarvestCraft 2 (Crops, Trees) is optional.
   The block uses `Material.WOOD` (no `MapColor` builder yet) and drops contents in `onRemove`.
   The screen draws with `PoseStack`/`RenderSystem` instead of `GuiGraphics`.
 - **Wandering trader** via Forge's `WandererTradesEvent`; offers use `ItemStack` costs (no `ItemCost`).
+
+## API
+
+Other mods can read and extend Steve's Pantry through `com.naverene.stevespantry.api`, the same
+package, types and methods as main (see the root [API.md](../API.md)). Everything outside that package
+is internal. `./gradlew build` also produces `build/libs/stevespantry-1.19.2-forge-0.1.0-api.jar` (API classes plus sources):
+compile against it with `compileOnly`, and put the full mod jar on the runtime classpath.
+
+```java
+if (StevesPantryApi.isAvailable()) {          // false when Steve's Pantry isn't installed
+    IPantryApi pantry = StevesPantryApi.get();
+    pantry.registerCoolant(MyItems.FREEZER_PACK.get(), 48000);
+    pantry.spice("chili").ifPresent(chili -> pantry.registerSpiceItem(MyItems.CHILI_POWDER.get(), chili));
+    pantry.registerShelfLifeModifier((foods, spices, life) ->
+            foods.stream().anyMatch(f -> f.is(MyItems.SALT.get())) ? life * 2 : life);
+}
+```
+
+| Area | Methods |
+|---|---|
+| Spices | `spices()`, `spice(id)`, `spiceOf(stack)`, `spiceStack(spice, n)`, `registerSpiceItem(item, spice)` |
+| Dishes | `isDish(stack)`, `dish(stack)` (a `DishView`), `makeDish(foods, spices)` |
+| Freshness | `ages`, `stamp`, `stage` (`FreshnessStage`), `remaining`, `ticksLeft`, `chill(stack, ticks, level)` |
+| Shelf life | `perishableTag()` (`stevespantry:perishable`), `isPerishable(stack)`, `registerShelfLifeModifier(modifier)` |
+| Cold storage | `registerCoolant(item, ticks)`, `coolantTicks(stack)` (an ice block is 24000) |
+
+Items registered with `registerSpiceItem` season dishes in the crafting grid, shelf-life modifiers
+run on every assembled dish, and registered coolants work in the Icebox (overriding the built-in
+snow and ice values), all as on main. Do registrations during mod construction or common setup.
+
+Differences from main: `ISpice#effect()` returns a plain `MobEffect` (there's no `Holder<MobEffect>`
+on 1.19.2), and the freshness and dish data the API reads and writes live in the stack's NBT
+(`made_at`, `shelf_life`, `ingredients`, `spices`) rather than data components.
