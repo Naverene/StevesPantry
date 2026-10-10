@@ -95,12 +95,47 @@ packed ice in the middle.
 - Hoppers above or below reach the food slots; hoppers on the sides feed the ice slot (and can't
   pull ice out). Comparators work like a chest.
 
+### Walk-in Freezer
+
+A powered multiblock, GregTech style but with no GregTech dependency. It works like GregTech's
+cleanroom: it has no storage of its own. Chests, barrels and other containers (modded storage too)
+placed **inside the room** spoil **10x slower** while it has power (the Icebox is 3x). It uses the
+same refund-the-elapsed-time trick as the Icebox (`block/Chiller.java`, shared by both), so it also
+keeps working while unloaded, as long as it had the power to cover that time.
+
+- **Shape**: a hollow cube. The walk-in size is **5x5x5** with a 3x3x3 room inside; a compact
+  **3x3x3** with one block inside (room for a chest) also works. The **Controller** sits in the
+  middle of one wall, facing out. The rest of the shell is **Freezer Casing**, or any mix of buses
+  and hatches. A walk-in freezer can have doors (any door) in its side walls, anywhere but the edges.
+  Anything can go inside the room.
+- Only the controller, buses and hatches have block entities. Casing is a plain block.
+- **Controller**: right-click says whether it's running, how many containers it's chilling and how
+  much power is stored, or what's wrong with the shell. It re-checks the shell once a second.
+- **Energy Hatch** (at least one): takes Forge Energy (FE) from any cable, stores 100,000 FE,
+  accepts up to 1,000 FE/t. The freezer draws a flat **20 FE/t**, only while there's food inside.
+  Right-click shows the charge. Without power, or with a broken shell, food inside ages normally.
+- **Input / Output Bus** (optional, 9 slots, middle of a wall only): pass-through hatches. An input
+  bus takes items from hoppers and pipes outside and pushes them into the container right behind it
+  inside the room. An output bus pulls from the container behind it, for hoppers and pipes outside.
+  Food sitting in a bus is chilled too.
+- **Condenser**: the wear part, like a GregTech maintenance hatch. Right-click the controller with
+  one to put it in (swapping out the old one), sneak-right-click with an empty hand to take it out.
+  With no condenser the freezer doesn't chill. It wears down only while actually chilling food:
+  240 durability, one point per 1,000 ticks, so about 10 in-game days of running. Once worn out it
+  isn't destroyed; the freezer drops to Icebox speed (3x) until you swap it or repair it with copper
+  ingots in an anvil. Recipe: copper ingots top and bottom rows, iron / packed ice / iron across the
+  middle.
+- An Icebox inside the freezer keeps its own 3x and isn't chilled again.
+- Recipes: 5 iron + 4 packed ice make 4 casings; the controller is an Icebox and a comparator in a
+  ring of casing; buses are a hopper above (input) or below (output) a casing; the energy hatch is a
+  redstone block on a casing.
+
 ## Next steps
 
 1. Grow the rare spices ourselves (other mods can already supply them through `c:` tags): saffron crocus, cumin, turmeric, cardamom crops; clove and star anise trees.
 2. Tint the dish texture from its ingredients, like Tinkers' part colours.
 3. Signature combos: named recipes (curry, chai, pumpkin spice) that give bonus effects when a dish
    has the right spice set.
-4. More ways to slow spoilage: a powered fridge, a pantry/cellar block, salting with HarvestCraft salt.
+4. More ways to slow spoilage: a pantry/cellar block, salting with HarvestCraft salt.
 5. Config for shelf life and effect lengths.
 6. JEI/EMI page for dish assembly.

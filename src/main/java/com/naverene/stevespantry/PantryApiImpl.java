@@ -5,6 +5,7 @@ import com.naverene.stevespantry.api.FreshnessStage;
 import com.naverene.stevespantry.api.IPantryApi;
 import com.naverene.stevespantry.api.ISpice;
 import com.naverene.stevespantry.api.ShelfLifeModifier;
+import com.naverene.stevespantry.block.Chiller;
 import com.naverene.stevespantry.block.IceboxBlockEntity;
 import com.naverene.stevespantry.component.DishContents;
 import com.naverene.stevespantry.component.Freshness;
@@ -141,13 +142,9 @@ public final class PantryApiImpl implements IPantryApi {
 
     @Override
     public void chill(ItemStack stack, long ticks, Level level) {
-        Freshness freshness = stack.get(ModRegistries.FRESHNESS);
-        if (freshness == null || ticks <= 0) {
-            return;
+        if (ticks > 0) {
+            Chiller.chill(List.of(stack), ticks, level.getGameTime());
         }
-        long now = level.getGameTime();
-        long madeAt = freshness.stamped() ? Math.min(now, freshness.madeAt() + ticks) : now;
-        stack.set(ModRegistries.FRESHNESS, new Freshness(madeAt, freshness.shelfLife()));
     }
 
     // ---- shelf life ----------------------------------------------------------------------------

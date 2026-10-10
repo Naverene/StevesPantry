@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "C",
+    "H"
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "C": {
+      "item": "stevespantry:freezer_casing"
+    }
+  },
+  "result": {
+    "id": "stevespantry:freezer_output_bus",
+    "count": 1
+  }
+}

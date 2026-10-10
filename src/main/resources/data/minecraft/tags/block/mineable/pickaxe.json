@@ -1,0 +1,9 @@
+{
+  "values": [
+    "stevespantry:freezer_controller",
+    "stevespantry:freezer_casing",
+    "stevespantry:freezer_input_bus",
+    "stevespantry:freezer_output_bus",
+    "stevespantry:freezer_energy_hatch"
+  ]
+}

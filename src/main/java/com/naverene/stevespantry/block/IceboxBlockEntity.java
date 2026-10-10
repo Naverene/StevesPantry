@@ -1,7 +1,6 @@
 package com.naverene.stevespantry.block;
 
 import com.naverene.stevespantry.ModRegistries;
-import com.naverene.stevespantry.component.Freshness;
 import com.naverene.stevespantry.menu.IceboxMenu;
 import com.naverene.stevespantry.reference.Reference;
 import java.util.Map;
@@ -26,11 +25,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A chest-sized cold box with a separate ice slot. Dishes age on world game time (see
- * {@link Freshness}), so instead of changing that clock the icebox hands back part of the time that
- * passed: every so often it moves each dish's "made at" forward by two thirds of the chilled ticks,
- * so dishes inside age at a third of the normal rate. Elapsed time is measured from the last chill,
- * which is saved, so the icebox keeps working across chunk unloads and restarts.
+ * A chest-sized cold box with a separate ice slot. Dishes inside age at a third of the normal rate;
+ * the slowdown itself lives in {@link Chiller}, shared with the walk-in freezer.
  *
  * <p>Chilling melts ice, like a furnace burns fuel, but only while there's a dish inside. With no
  * ice left, dishes spoil at the normal rate.
@@ -41,7 +37,6 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity implements World
     public static final int ICE_SLOT = SIZE;
     /** Dishes inside spoil this many times slower. */
     public static final int SLOWDOWN = 3;
-    private static final int CHILL_INTERVAL = 20;
     private static final int[] FOOD_SLOTS = IntStream.range(0, SIZE).toArray();
     private static final int[] ICE_SLOTS = {ICE_SLOT};
 
@@ -54,10 +49,7 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity implements World
             Items.BLUE_ICE, 81 * 24000);
 
     private NonNullList<ItemStack> items = NonNullList.withSize(SIZE + 1, ItemStack.EMPTY);
-    /** Game time of the last chill, or -1 before the first one. */
-    private long lastChilled = -1L;
-    /** Leftover fraction of a tick from the last refund, in 1/SLOWDOWN units. */
-    private long carry;
+    private final Chiller chiller = new Chiller(SLOWDOWN);
     /** Ticks of cold left from ice already melted into the box. */
     private long coldLeft;
     /** What the last piece of ice was worth, for the gauge. */
@@ -91,30 +83,14 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity implements World
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, IceboxBlockEntity icebox) {
         long now = level.getGameTime();
-        if (icebox.lastChilled < 0 || icebox.lastChilled > now) {
-            icebox.lastChilled = now;
-            icebox.setChanged();
+        long elapsed = icebox.chiller.due(now);
+        if (elapsed < 0) {
             return;
         }
-        long elapsed = now - icebox.lastChilled;
-        if (elapsed < CHILL_INTERVAL) {
-            return;
-        }
-        icebox.lastChilled = now;
         long chilled = icebox.hasDish() ? icebox.melt(elapsed) : 0L;
-        long credit = chilled * (SLOWDOWN - 1) + icebox.carry;
-        long refund = credit / SLOWDOWN;
-        icebox.carry = credit % SLOWDOWN;
+        long refund = icebox.chiller.refund(now, chilled);
         if (refund > 0) {
-            for (int i = 0; i < SIZE; i++) {
-                ItemStack stack = icebox.items.get(i);
-                Freshness freshness = stack.get(ModRegistries.FRESHNESS);
-                if (freshness == null) {
-                    continue;
-                }
-                long madeAt = freshness.stamped() ? Math.min(now, freshness.madeAt() + refund) : now;
-                stack.set(ModRegistries.FRESHNESS, new Freshness(madeAt, freshness.shelfLife()));
-            }
+            Chiller.chill(icebox.items.subList(0, SIZE), refund, now);
         }
         icebox.setChanged();
     }
@@ -195,8 +171,7 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity implements World
         super.loadAdditional(tag, registries);
         items = NonNullList.withSize(SIZE + 1, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, items, registries);
-        lastChilled = tag.contains("last_chilled") ? tag.getLong("last_chilled") : -1L;
-        carry = tag.getLong("chill_carry");
+        chiller.load(tag);
         coldLeft = tag.getLong("cold_left");
         coldMax = tag.getLong("cold_max");
     }
@@ -205,8 +180,7 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity implements World
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         ContainerHelper.saveAllItems(tag, items, registries);
-        tag.putLong("last_chilled", lastChilled);
-        tag.putLong("chill_carry", carry);
+        chiller.save(tag);
         tag.putLong("cold_left", coldLeft);
         tag.putLong("cold_max", coldMax);
     }

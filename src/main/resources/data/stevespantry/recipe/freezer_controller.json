@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CRC",
+    "CBC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "stevespantry:freezer_casing"
+    },
+    "R": {
+      "item": "minecraft:comparator"
+    },
+    "B": {
+      "item": "stevespantry:icebox"
+    }
+  },
+  "result": {
+    "id": "stevespantry:freezer_controller",
+    "count": 1
+  }
+}
