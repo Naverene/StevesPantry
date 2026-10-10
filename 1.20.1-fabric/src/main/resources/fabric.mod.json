@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "Spices from around the world and dishes you assemble yourself, Tinkers' style.\nDishes go stale and spoil, so cook what you'll eat. Pairs with Pam's HarvestCraft 2.",
+  "authors": [
+    "awweaver"
+  ],
+  "license": "All Rights Reserved",
+  "icon": "assets/stevespantry/textures/item/cinnamon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.naverene.stevespantry.StevesPantry"
+    ],
+    "client": [
+      "com.naverene.stevespantry.StevesPantryClient"
+    ]
+  },
+  "mixins": [
+    "stevespantry.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17"
+  },
+  "suggests": {
+    "pamhc2crops": "*",
+    "pamhc2trees": "*"
+  }
+}

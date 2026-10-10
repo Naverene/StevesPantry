@@ -1,0 +1,45 @@
+name: Build ports
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.find.outputs.versions }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        # Every top-level folder named after a Minecraft version (1.7.10, 1.20.1-fabric, 26.3...) is a port.
+        run: echo "versions=$(ls -d [0-9]*/ 2>/dev/null | xargs -rn1 basename | jq -Rcs 'split("\n") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: list
+    if: needs.list.outputs.versions != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{ fromJson(needs.list.outputs.versions) }}
+    defaults:
+      run:
+        working-directory: ${{ matrix.version }}
+    steps:
+      - uses: actions/checkout@v4
+      # Gradle itself runs on 21; each port's toolchain block fetches the JDK it compiles with.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            8
+            17
+            25
+            21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stevespantry-${{ matrix.version }}
+          path: ${{ matrix.version }}/build/libs/*.jar
