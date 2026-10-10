@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "stevespantry:blocks/icebox_top",
+    "bottom": "stevespantry:blocks/icebox_bottom",
+    "side": "stevespantry:blocks/icebox_side"
+  }
+}
