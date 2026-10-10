@@ -56,6 +56,13 @@
   "message.stevespantry.freezer.wrong_block": "%s at %s, %s, %s doesn't belong in the freezer's walls",
   "message.stevespantry.freezer.no_energy": "The freezer needs at least one Energy Hatch in its walls",
   "message.stevespantry.freezer.bus_on_edge": "Buses must go in the middle of a wall, not on an edge (%s, %s, %s)",
-  "message.stevespantry.freezer.running": "%sx%sx%s freezer running: chilling %s containers, %s FE stored",
-  "message.stevespantry.freezer.no_power": "%sx%sx%s freezer formed, but out of power (%s containers inside, %s FE stored)"
+  "message.stevespantry.freezer.running": "%sx%sx%s freezer running at %sx: chilling %s containers, %s FE stored",
+  "message.stevespantry.freezer.no_power": "%sx%sx%s freezer formed, but out of power (%s containers inside, %s FE stored)",
+  "item.stevespantry.condenser": "Freezer Condenser",
+  "tooltip.stevespantry.condenser": "Wears down while the freezer chills (about 10 days). Repair with copper in an anvil",
+  "tooltip.stevespantry.condenser.worn": "Worn out: the freezer only chills %sx",
+  "tooltip.stevespantry.freezer_controller.condenser": "Needs a Freezer Condenser: right-click to put one in, sneak-right-click to take it out",
+  "message.stevespantry.freezer.running_worn": "%sx%sx%s freezer running at only %sx, condenser worn out: chilling %s containers, %s FE stored",
+  "message.stevespantry.freezer.no_condenser": "The freezer needs a Freezer Condenser: right-click the controller with one",
+  "message.stevespantry.freezer.condenser_installed": "Condenser installed"
 }

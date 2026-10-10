@@ -118,6 +118,13 @@ keeps working while unloaded, as long as it had the power to cover that time.
   bus takes items from hoppers and pipes outside and pushes them into the container right behind it
   inside the room. An output bus pulls from the container behind it, for hoppers and pipes outside.
   Food sitting in a bus is chilled too.
+- **Condenser**: the wear part, like a GregTech maintenance hatch. Right-click the controller with
+  one to put it in (swapping out the old one), sneak-right-click with an empty hand to take it out.
+  With no condenser the freezer doesn't chill. It wears down only while actually chilling food:
+  240 durability, one point per 1,000 ticks, so about 10 in-game days of running. Once worn out it
+  isn't destroyed; the freezer drops to Icebox speed (3x) until you swap it or repair it with copper
+  ingots in an anvil. Recipe: copper ingots top and bottom rows, iron / packed ice / iron across the
+  middle.
 - An Icebox inside the freezer keeps its own 3x and isn't chilled again.
 - Recipes: 5 iron + 4 packed ice make 4 casings; the controller is an Icebox and a comparator in a
   ring of casing; buses are a hopper above (input) or below (output) a casing; the energy hatch is a

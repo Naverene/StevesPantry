@@ -10,6 +10,7 @@ import com.naverene.stevespantry.block.IceboxBlock;
 import com.naverene.stevespantry.block.IceboxBlockEntity;
 import com.naverene.stevespantry.component.DishContents;
 import com.naverene.stevespantry.component.Freshness;
+import com.naverene.stevespantry.item.CondenserItem;
 import com.naverene.stevespantry.item.DishItem;
 import com.naverene.stevespantry.item.MortarAndPestleItem;
 import com.naverene.stevespantry.item.SpiceItem;
@@ -125,6 +126,9 @@ public final class ModRegistries {
             () -> new FreezerEnergyHatchBlock(freezerMetal()));
     public static final DeferredItem<BlockItem> FREEZER_ENERGY_HATCH_ITEM = ITEMS.registerSimpleBlockItem(FREEZER_ENERGY_HATCH);
 
+    public static final DeferredItem<CondenserItem> CONDENSER = ITEMS.register("condenser",
+            () -> new CondenserItem(new Item.Properties().durability(CondenserItem.DURABILITY)));
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FreezerControllerBlockEntity>>
             FREEZER_CONTROLLER_BLOCK_ENTITY = BLOCK_ENTITIES.register("freezer_controller",
                     () -> BlockEntityType.Builder.of(FreezerControllerBlockEntity::new, FREEZER_CONTROLLER.get()).build(null));
@@ -152,6 +156,7 @@ public final class ModRegistries {
                         output.accept(FREEZER_INPUT_BUS_ITEM.get());
                         output.accept(FREEZER_OUTPUT_BUS_ITEM.get());
                         output.accept(FREEZER_ENERGY_HATCH_ITEM.get());
+                        output.accept(CONDENSER.get());
                         SPICES.values().forEach(spice -> output.accept(spice.get()));
                         output.accept(SPOILED_LEFTOVERS.get());
                     })

@@ -1,6 +1,7 @@
 package com.naverene.stevespantry.block;
 
 import com.naverene.stevespantry.ModRegistries;
+import com.naverene.stevespantry.item.CondenserItem;
 import com.naverene.stevespantry.reference.Reference;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +28,24 @@ import org.jetbrains.annotations.Nullable;
  * the shell, and while it has power it chills every container standing inside the room (chests,
  * barrels, modded storage) with the same {@link Chiller} the Icebox uses, only harder. Buses in the
  * walls pass items through to the container right behind them. Power is only drawn while there is
- * food inside. Without power, or with a broken shell, food inside ages normally.
+ * food inside. Without power, a condenser, or a whole shell, food inside ages normally. The
+ * condenser wears down while chilling; once worn out the freezer only chills as hard as an Icebox.
  */
 public class FreezerControllerBlockEntity extends BlockEntity {
     /** Dishes inside spoil this many times slower while it has power. */
     public static final int SLOWDOWN = 10;
+    /** How hard it still chills once the condenser is worn out: the same as an Icebox. */
+    public static final int WORN_SLOWDOWN = IceboxBlockEntity.SLOWDOWN;
     /** Power drawn per tick while chilling food. */
     public static final int FE_PER_TICK = 20;
     public static final int WALK_IN_SIZE = 5;
     public static final int COMPACT_SIZE = 3;
 
     private final Chiller chiller = new Chiller(SLOWDOWN);
+    /** The wear part; without one the freezer doesn't chill at all. */
+    private ItemStack condenser = ItemStack.EMPTY;
+    /** Chilled ticks not yet charged to the condenser as damage. */
+    private long wear;
 
     public FreezerControllerBlockEntity(BlockPos pos, BlockState state) {
         super(ModRegistries.FREEZER_CONTROLLER_BLOCK_ENTITY.get(), pos, state);
@@ -133,12 +141,35 @@ public class FreezerControllerBlockEntity extends BlockEntity {
         }
         Parts parts = scan.parts();
         long stored = parts.hatches().stream().mapToLong(h -> h.energy().getEnergyStored()).sum();
-        return message(stored >= FE_PER_TICK ? "running" : "no_power",
-                parts.size(), parts.size(), parts.size(), countChilled(parts), stored);
+        if (condenser.isEmpty()) {
+            return message("no_condenser");
+        }
+        if (stored < FE_PER_TICK) {
+            return message("no_power", parts.size(), parts.size(), parts.size(), countChilled(parts), stored);
+        }
+        return message(CondenserItem.isWorn(condenser) ? "running_worn" : "running",
+                parts.size(), parts.size(), parts.size(), slowdown(), countChilled(parts), stored);
     }
 
     private long countChilled(Parts parts) {
         return parts.inside().stream().filter(pos -> handlerAt(pos, null) != null).count();
+    }
+
+    private int slowdown() {
+        return CondenserItem.isWorn(condenser) ? WORN_SLOWDOWN : SLOWDOWN;
+    }
+
+    public ItemStack condenser() {
+        return condenser;
+    }
+
+    /** Puts {@code replacement} in (empty to take it out) and returns the condenser that was there. */
+    public ItemStack swapCondenser(ItemStack replacement) {
+        ItemStack old = condenser;
+        condenser = replacement;
+        wear = 0;
+        setChanged();
+        return old;
     }
 
     static Component message(String key, Object... args) {
@@ -166,7 +197,7 @@ public class FreezerControllerBlockEntity extends BlockEntity {
 
         Contents contents = freezer.contents(parts);
         long powered = 0;
-        if (contents.hasFood()) {
+        if (!freezer.condenser.isEmpty() && contents.hasFood()) {
             long stored = 0;
             for (FreezerEnergyHatchBlockEntity hatch : parts.hatches()) {
                 stored += hatch.energy().getEnergyStored();
@@ -177,11 +208,25 @@ public class FreezerControllerBlockEntity extends BlockEntity {
                 owed -= hatch.energy().drain((int) Math.min(Integer.MAX_VALUE, owed));
             }
         }
+        freezer.chiller.setSlowdown(freezer.slowdown());
+        freezer.wearCondenser(powered);
         long refund = freezer.chiller.refund(now, powered);
         if (refund > 0) {
             contents.chill(refund, now);
         }
         freezer.setChanged();
+    }
+
+    private void wearCondenser(long chilledTicks) {
+        if (chilledTicks <= 0 || condenser.isEmpty() || CondenserItem.isWorn(condenser)) {
+            return;
+        }
+        wear += chilledTicks;
+        int damage = (int) Math.min(Integer.MAX_VALUE, wear / CondenserItem.TICKS_PER_DAMAGE);
+        wear %= CondenserItem.TICKS_PER_DAMAGE;
+        if (damage > 0) {
+            condenser.setDamageValue(Math.min(condenser.getMaxDamage(), condenser.getDamageValue() + damage));
+        }
     }
 
     /** Input buses push into the container behind them; output buses pull from it. */
@@ -296,11 +341,17 @@ public class FreezerControllerBlockEntity extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         chiller.load(tag);
+        condenser = ItemStack.parseOptional(registries, tag.getCompound("condenser"));
+        wear = tag.getLong("condenser_wear");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         chiller.save(tag);
+        if (!condenser.isEmpty()) {
+            tag.put("condenser", condenser.save(registries));
+        }
+        tag.putLong("condenser_wear", wear);
     }
 }

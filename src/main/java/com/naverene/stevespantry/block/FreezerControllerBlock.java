@@ -2,13 +2,17 @@ package com.naverene.stevespantry.block;
 
 import com.mojang.serialization.MapCodec;
 import com.naverene.stevespantry.ModRegistries;
+import com.naverene.stevespantry.item.CondenserItem;
 import com.naverene.stevespantry.reference.Reference;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -86,11 +90,39 @@ public class FreezerControllerBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+                                              InteractionHand hand, BlockHitResult hit) {
+        if (!(stack.getItem() instanceof CondenserItem)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FreezerControllerBlockEntity controller) {
+            ItemStack old = controller.swapCondenser(stack.split(1));
+            if (!old.isEmpty()) {
+                player.getInventory().placeItemBackInInventory(old);
+            }
+            player.displayClientMessage(FreezerControllerBlockEntity.message("condenser_installed"), true);
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof FreezerControllerBlockEntity controller) {
-            player.displayClientMessage(controller.status(), false);
+            if (player.isShiftKeyDown() && !controller.condenser().isEmpty()) {
+                player.getInventory().placeItemBackInInventory(controller.swapCondenser(ItemStack.EMPTY));
+            } else {
+                player.displayClientMessage(controller.status(), false);
+            }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof FreezerControllerBlockEntity controller) {
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), controller.condenser());
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override
@@ -99,5 +131,6 @@ public class FreezerControllerBlock extends BaseEntityBlock {
         tooltip.add(Component.translatable(key, FreezerControllerBlockEntity.SLOWDOWN).withStyle(ChatFormatting.AQUA));
         tooltip.add(Component.translatable(key + ".power", FreezerControllerBlockEntity.FE_PER_TICK).withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable(key + ".shape").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable(key + ".condenser").withStyle(ChatFormatting.GRAY));
     }
 }

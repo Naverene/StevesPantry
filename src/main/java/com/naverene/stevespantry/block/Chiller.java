@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 public final class Chiller {
     public static final int CHILL_INTERVAL = 20;
 
-    private final int slowdown;
+    private int slowdown;
     /** Game time of the last chill, or -1 before the first one. */
     private long lastChilled = -1L;
     /** Leftover fraction of a tick from the last refund, in 1/slowdown units. */
@@ -24,6 +24,14 @@ public final class Chiller {
 
     public Chiller(int slowdown) {
         this.slowdown = slowdown;
+    }
+
+    /** Changes how hard it chills from the next refund on, like the freezer does when its condenser wears out. */
+    public void setSlowdown(int slowdown) {
+        if (slowdown != this.slowdown) {
+            this.slowdown = slowdown;
+            carry = 0;
+        }
     }
 
     /**
