@@ -1,7 +1,6 @@
 package com.naverene.stevespantry.block;
 
 import com.naverene.stevespantry.ModRegistries;
-import com.naverene.stevespantry.PantryApiImpl;
 import com.naverene.stevespantry.component.Freshness;
 import com.naverene.stevespantry.menu.IceboxMenu;
 import com.naverene.stevespantry.reference.Reference;
@@ -86,7 +85,7 @@ public class IceboxBlockEntity extends BaseContainerBlockEntity implements World
     }
 
     public static int coolantTicks(ItemStack stack) {
-        Integer registered = PantryApiImpl.INSTANCE.registeredCoolant(stack.getItem());
+        Integer registered = com.naverene.stevespantry.PantryApiImpl.INSTANCE.registeredCoolant(stack.getItem());
         return registered != null ? registered : COOLANTS.getOrDefault(stack.getItem(), 0);
     }
 
