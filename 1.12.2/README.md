@@ -65,3 +65,37 @@ run on Java 25, so this uses the last 1.x release with Gradle 8.)
 - **Spoiled Leftovers** is an `ItemFood` that rolls its Hunger (80%) and Nausea (30%) in
   `onFoodEaten`, since 1.12.2 foods only take one potion effect.
 - `main`'s `stevespantry:spices` tag has no counterpart (nothing in the code reads it).
+
+## API
+
+Other mods can read and extend Steve's Pantry through `com.naverene.stevespantry.api`, the same
+package, type names and methods as main's [API.md](../API.md) (`StevesPantryApi.VERSION` = 1).
+Everything outside that package is internal. `./gradlew build` also writes
+`build/libs/stevespantry-1.12.2-0.1.0-api.jar` (API classes in MCP names, plus sources) to compile against.
+
+```java
+if (StevesPantryApi.isAvailable()) {          // false when Steve's Pantry isn't installed
+    IPantryApi pantry = StevesPantryApi.get();
+    pantry.registerCoolant(MyItems.FREEZER_PACK, 48000);
+    pantry.spice("chili").ifPresent(chili -> pantry.registerSpiceItem(MyItems.CHILI_POWDER, chili));
+    pantry.registerShelfLifeModifier((foods, spices, life) ->
+            foods.stream().anyMatch(f -> f.getItem() == MyItems.SALT) ? life * 2 : life);
+}
+```
+
+Spices (`spices`, `spice`, `spiceOf`, `spiceStack`, `registerSpiceItem`), dishes (`isDish`, `dish`,
+`makeDish`), freshness (`ages`, `stamp`, `stage`, `remaining`, `ticksLeft`, `chill`), shelf life
+(`isPerishable`, `registerShelfLifeModifier`) and cold storage (`registerCoolant`, `coolantTicks`)
+work as on main. Registered spice items count in the dish recipe, shelf-life modifiers run on every
+assembled dish, and registered coolants work in the Icebox. Do registrations in pre-init or init.
+Differences on 1.12.2:
+
+- **No item tags:** main's `perishableTag()` is `List<String> perishableOreNames()`, the Ore
+  Dictionary names that make a food perishable. Register your food under one of them with
+  `OreDictionary.registerOre`. `isPerishable` also counts the vanilla meats, fish, milk and eggs.
+- `DishView#ingredients()` is a `List<ItemStack>` (one of each, count 1) instead of `List<Item>`,
+  because items still carry metadata. `DishView` is a small immutable class with the record's
+  accessors, since this version compiles as Java 8.
+- Freshness methods take a `World` (time is `getTotalWorldTime()`); `ISpice#effect()` returns a `Potion`.
+- `registerSpiceItem` and `registerCoolant` take an `Item` and cover all its metadata values.
+- `makeDish` returns `ItemStack.EMPTY` when the rules aren't met.

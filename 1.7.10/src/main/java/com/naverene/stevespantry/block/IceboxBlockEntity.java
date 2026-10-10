@@ -66,6 +66,10 @@ public class IceboxBlockEntity extends TileEntity implements ISidedInventory {
         if (stack == null) {
             return 0;
         }
+        Integer registered = com.naverene.stevespantry.PantryApiImpl.INSTANCE.registeredCoolant(stack.getItem());
+        if (registered != null) {
+            return registered;
+        }
         Integer ticks = COOLANTS.get(stack.getItem());
         return ticks == null ? 0 : ticks;
     }
