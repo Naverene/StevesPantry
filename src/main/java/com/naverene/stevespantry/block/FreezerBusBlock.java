@@ -23,9 +23,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
- * A 9-slot hatch in the freezer's shell. Input buses take items from hoppers and pipes and the
- * controller pulls them into cold storage; output buses are kept stocked from cold storage for
- * hoppers and pipes to pull from.
+ * A 9-slot pass-through hatch in the middle of one of the freezer's walls. An input bus takes
+ * items from hoppers and pipes outside and the freezer pushes them into the container right behind
+ * it, inside the room; an output bus is filled from that container for hoppers and pipes to pull.
  */
 public class FreezerBusBlock extends BaseEntityBlock {
     public static final MapCodec<FreezerBusBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(

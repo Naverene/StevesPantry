@@ -97,29 +97,28 @@ packed ice in the middle.
 
 ### Walk-in Freezer
 
-A powered multiblock, GregTech style but with no GregTech dependency. Dishes inside spoil
-**10x slower** while it has power (the Icebox is 3x). It uses the same refund-the-elapsed-time
-trick as the Icebox (`block/Chiller.java`, shared by both), so it also keeps working while unloaded,
-as long as it had the power to cover that time.
+A powered multiblock, GregTech style but with no GregTech dependency. It works like GregTech's
+cleanroom: it has no storage of its own. Chests, barrels and other containers (modded storage too)
+placed **inside the room** spoil **10x slower** while it has power (the Icebox is 3x). It uses the
+same refund-the-elapsed-time trick as the Icebox (`block/Chiller.java`, shared by both), so it also
+keeps working while unloaded, as long as it had the power to cover that time.
 
 - **Shape**: a hollow cube. The walk-in size is **5x5x5** with a 3x3x3 room inside; a compact
-  **3x3x3** with one empty block inside also works. The **Controller** sits in the middle of one
-  wall, facing out. The rest of the shell is **Freezer Casing**, or any mix of buses and hatches.
-  A walk-in freezer can have doors (any door) in its side walls, anywhere but the edges. The
-  inside must be open space: air, or things you can walk through like torches and signs.
-- Only the controller, buses and hatches have block entities (they hold items or energy). Casing
-  is a plain block.
-- **Controller**: 54 slots of cold storage (a double chest). Right-click opens it, or says what's
-  wrong with the shell (wrong block, inside not open, no energy hatch). It re-checks the shell
-  once a second.
+  **3x3x3** with one block inside (room for a chest) also works. The **Controller** sits in the
+  middle of one wall, facing out. The rest of the shell is **Freezer Casing**, or any mix of buses
+  and hatches. A walk-in freezer can have doors (any door) in its side walls, anywhere but the edges.
+  Anything can go inside the room.
+- Only the controller, buses and hatches have block entities. Casing is a plain block.
+- **Controller**: right-click says whether it's running, how many containers it's chilling and how
+  much power is stored, or what's wrong with the shell. It re-checks the shell once a second.
 - **Energy Hatch** (at least one): takes Forge Energy (FE) from any cable, stores 100,000 FE,
-  accepts up to 1,000 FE/t. The freezer draws **20 FE/t**, only while there's food inside.
-  Right-click shows the charge. Without power, or with a broken shell, it's just a big box.
-- **Input Bus** (optional, 9 slots): hoppers and pipes can insert but not extract; the controller
-  pulls everything into storage.
-- **Output Bus** (optional, 9 slots): hoppers and pipes can extract but not insert; the controller
-  keeps it stocked from storage.
-- Food in the buses is chilled too.
+  accepts up to 1,000 FE/t. The freezer draws a flat **20 FE/t**, only while there's food inside.
+  Right-click shows the charge. Without power, or with a broken shell, food inside ages normally.
+- **Input / Output Bus** (optional, 9 slots, middle of a wall only): pass-through hatches. An input
+  bus takes items from hoppers and pipes outside and pushes them into the container right behind it
+  inside the room. An output bus pulls from the container behind it, for hoppers and pipes outside.
+  Food sitting in a bus is chilled too.
+- An Icebox inside the freezer keeps its own 3x and isn't chilled again.
 - Recipes: 5 iron + 4 packed ice make 4 casings; the controller is an Icebox and a comparator in a
   ring of casing; buses are a hopper above (input) or below (output) a casing; the energy hatch is a
   redstone block on a casing.
