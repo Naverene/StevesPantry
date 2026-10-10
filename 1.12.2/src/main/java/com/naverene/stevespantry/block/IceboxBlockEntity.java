@@ -76,6 +76,10 @@ public class IceboxBlockEntity extends TileEntityLockable implements ISidedInven
             map.put(Item.getItemFromBlock(Blocks.PACKED_ICE), 9 * 24000);
             coolants = map;
         }
+        Integer registered = com.naverene.stevespantry.PantryApiImpl.INSTANCE.registeredCoolant(stack.getItem());
+        if (registered != null) {
+            return registered;
+        }
         Integer ticks = coolants.get(stack.getItem());
         return ticks == null ? 0 : ticks;
     }

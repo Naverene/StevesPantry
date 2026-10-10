@@ -38,3 +38,17 @@ processResources {
         expand props
     }
 }
+
+// Just the public API (classes and sources, in MCP names), for addon authors to compile against.
+tasks.register('apiJar', Jar) {
+    archiveClassifier = 'api'
+    from(sourceSets.main.output) {
+        include 'com/naverene/stevespantry/api/**'
+    }
+    from(sourceSets.main.allJava) {
+        include 'com/naverene/stevespantry/api/**'
+    }
+}
+tasks.named('assemble') {
+    dependsOn 'apiJar'
+}

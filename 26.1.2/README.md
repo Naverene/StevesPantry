@@ -38,3 +38,22 @@ is what Minecraft 26.1 changed underneath it:
 - Registry ids are passed to item/block properties through `registerItem`/`registerBlock`.
 - Renames: `ResourceLocation` is `Identifier`; effects are `HASTE`, `RESISTANCE`, `STRENGTH`,
   `SPEED`, `JUMP_BOOST`, `NAUSEA`.
+
+## API
+
+Same API as main (see the repo root's [API.md](../API.md)): package `com.naverene.stevespantry.api`,
+`StevesPantryApi.get()` / `isAvailable()`, `VERSION = 1`, and identical method names and behaviour.
+`./gradlew build` also writes `build/libs/stevespantry-<version>-api.jar` (API classes plus
+sources) to compile against. Registered spice items count in the dish recipe, shelf-life modifiers
+run on every assembled dish (crafting grid and `makeDish`), and registered coolants work in the
+Icebox, overriding the built-in snow/ice values.
+
+```java
+if (StevesPantryApi.isAvailable()) {
+    IPantryApi pantry = StevesPantryApi.get();
+    pantry.registerCoolant(MyItems.FREEZER_PACK.get(), 48000);
+    pantry.spice("chili").ifPresent(chili -> pantry.registerSpiceItem(MyItems.CHILI_POWDER.get(), chili));
+}
+```
+
+No differences from main's API on this version.

@@ -1,5 +1,6 @@
 package com.naverene.stevespantry;
 
+import com.naverene.stevespantry.api.ISpice;
 import com.naverene.stevespantry.reference.Reference;
 import net.minecraft.potion.Potion;
 
@@ -9,7 +10,7 @@ import net.minecraft.potion.Potion;
  *
  * <p>1.7.10 has no Luck effect (and its Saturation effect does nothing over time), so saffron gives Invisibility.
  */
-public enum Spice {
+public enum Spice implements ISpice {
     BLACK_PEPPER("black_pepper", "Piper nigrum", 0x3B3330, Potion.digSpeed, 0F, 1F, false),
     CINNAMON("cinnamon", "Cinnamomum verum", 0x9C5A2E, Potion.regeneration, 0F, 1F, false),
     NUTMEG("nutmeg", "Myristica fragrans", 0x8A5F3C, Potion.nightVision, 0F, 1F, false),
@@ -46,32 +47,39 @@ public enum Spice {
         this.rare = rare;
     }
 
+    @Override
     public String id() {
         return id;
     }
 
+    @Override
     public String latinName() {
         return latinName;
     }
 
+    @Override
     public int color() {
         return color;
     }
 
     /** The effect a fresh dish gives, or null for spices that add saturation or shelf life instead. */
+    @Override
     public Potion effect() {
         return effect;
     }
 
+    @Override
     public float bonusSaturation() {
         return bonusSaturation;
     }
 
+    @Override
     public float shelfLifeMultiplier() {
         return shelfLifeMultiplier;
     }
 
     /** Rare spices have no HarvestCraft source; they come from other mods' ore names or a farmer villager. */
+    @Override
     public boolean rare() {
         return rare;
     }
@@ -81,6 +89,7 @@ public enum Spice {
         return Reference.MODID + "." + id;
     }
 
+    @Override
     public String translationKey() {
         return "item." + unlocalizedName() + ".name";
     }

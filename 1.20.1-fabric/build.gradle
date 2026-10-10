@@ -53,3 +53,24 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = 17
 }
+
+// Just the public API (classes and sources), for addon authors to compile against. The dev
+// (Mojang-named) jar is remapped to intermediary like the main jar, so addons can use
+// modCompileOnly with it.
+def apiJar = tasks.register('apiJar', Jar) {
+    archiveClassifier = 'api-dev'
+    destinationDirectory = layout.buildDirectory.dir('devlibs')
+    from(sourceSets.main.output) {
+        include 'com/naverene/stevespantry/api/**'
+    }
+    from(sourceSets.main.allJava) {
+        include 'com/naverene/stevespantry/api/**'
+    }
+}
+def remapApiJar = tasks.register('remapApiJar', net.fabricmc.loom.task.RemapJarTask) {
+    inputFile = apiJar.flatMap { it.archiveFile }
+    archiveClassifier = 'api'
+}
+tasks.named('assemble') {
+    dependsOn remapApiJar
+}

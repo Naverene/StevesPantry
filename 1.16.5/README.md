@@ -55,3 +55,35 @@ Pam's HarvestCraft 2 (Crops, Trees) for 1.16.5 is optional, as on main.
   registered with `ScreenManager.register` in `FMLClientSetupEvent`.
 - Data folders use the old plural names (`recipes/`, `loot_tables/`, `tags/items/`), recipes have no
   `category` and use `"item"` results, and `pack.mcmeta` uses pack format 6.
+
+## API
+
+Other mods can read and extend Steve's Pantry through `com.naverene.stevespantry.api`, the same
+package, type names and methods as main's [API.md](../API.md) (`StevesPantryApi.VERSION` = 1).
+Everything outside that package is internal. `./gradlew build` also writes
+`build/libs/stevespantry-1.16.5-0.1.0-api.jar` (API classes in official mappings, plus sources) to
+compile against.
+
+```java
+if (StevesPantryApi.isAvailable()) {          // false when Steve's Pantry isn't installed
+    IPantryApi pantry = StevesPantryApi.get();
+    pantry.registerCoolant(MyItems.FREEZER_PACK.get(), 48000);
+    pantry.spice("chili").ifPresent(chili -> pantry.registerSpiceItem(MyItems.CHILI_POWDER.get(), chili));
+    pantry.registerShelfLifeModifier((foods, spices, life) ->
+            foods.stream().anyMatch(f -> f.getItem() == MyItems.SALT.get()) ? life * 2 : life);
+}
+```
+
+Spices (`spices`, `spice`, `spiceOf`, `spiceStack`, `registerSpiceItem`), dishes (`isDish`, `dish`,
+`makeDish`), freshness (`ages`, `stamp`, `stage`, `remaining`, `ticksLeft`, `chill`), shelf life
+(`perishableTag`, `isPerishable`, `registerShelfLifeModifier`) and cold storage (`registerCoolant`,
+`coolantTicks`) work as on main. Registered spice items count in the dish recipe, shelf-life
+modifiers run on every assembled dish, and registered coolants work in the Icebox. Do registrations
+during mod construction or common setup. Differences on 1.16.5:
+
+- Freshness methods take a `World` instead of a `Level`.
+- `ISpice#effect()` returns an `Effect` (no `Holder` on 1.16.5).
+- `perishableTag()` returns an `ITag.INamedTag<Item>` (Forge's optional named tag for
+  `stevespantry:perishable`) instead of a `TagKey<Item>`.
+- `DishView` is a small immutable class with the record's accessors (`ingredients()`, `spices()`,
+  `perishable()`), since this version compiles as Java 8.

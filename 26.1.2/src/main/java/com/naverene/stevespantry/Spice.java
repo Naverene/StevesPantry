@@ -1,6 +1,7 @@
 package com.naverene.stevespantry;
 
 import com.mojang.serialization.Codec;
+import com.naverene.stevespantry.api.ISpice;
 import com.naverene.stevespantry.reference.Reference;
 import io.netty.buffer.ByteBuf;
 import java.util.function.Supplier;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
  * Every spice the mod adds. Each one carries its botanical (Latin) name for the tooltip and one
  * thing it does to a dish: a status effect when eaten fresh, extra saturation, or a longer shelf life.
  */
-public enum Spice implements StringRepresentable {
+public enum Spice implements StringRepresentable, ISpice {
     BLACK_PEPPER("black_pepper", "Piper nigrum", 0x3B3330, () -> MobEffects.HASTE, 0F, 1F, false),
     CINNAMON("cinnamon", "Cinnamomum verum", 0x9C5A2E, () -> MobEffects.REGENERATION, 0F, 1F, false),
     NUTMEG("nutmeg", "Myristica fragrans", 0x8A5F3C, () -> MobEffects.NIGHT_VISION, 0F, 1F, false),
@@ -57,36 +58,44 @@ public enum Spice implements StringRepresentable {
         this.rare = rare;
     }
 
+    @Override
     public String id() {
         return id;
     }
 
+    @Override
     public String latinName() {
         return latinName;
     }
 
+    @Override
     public int color() {
         return color;
     }
 
+    @Override
     @Nullable
     public Holder<MobEffect> effect() {
         return effect == null ? null : effect.get();
     }
 
+    @Override
     public float bonusSaturation() {
         return bonusSaturation;
     }
 
+    @Override
     public float shelfLifeMultiplier() {
         return shelfLifeMultiplier;
     }
 
     /** Rare spices have no HarvestCraft source; they come from other mods' {@code c:} tags or the wandering trader. */
+    @Override
     public boolean rare() {
         return rare;
     }
 
+    @Override
     public String translationKey() {
         return "item." + Reference.MODID + "." + id;
     }
