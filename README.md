@@ -1,7 +1,8 @@
 # Steve's Pantry
 
 Spices and build-your-own dishes for Minecraft **1.21.1 / NeoForge**, made to pair with
-Pam's HarvestCraft 2. See [DESIGN.md](DESIGN.md) for how everything works.
+Pam's HarvestCraft 2. See [DESIGN.md](DESIGN.md) for how everything works, and [API.md](API.md)
+for hooking another mod into it.
 
 ## Build
 
