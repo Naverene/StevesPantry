@@ -1,0 +1,32 @@
+{
+  "values": [
+    {
+      "id": "pamhc2trees:vanillabeanitem",
+      "required": false
+    },
+    {
+      "id": "#forge:fruits/vanillabean",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/vanillabean",
+      "required": false
+    },
+    {
+      "id": "#forge:fruits/vanilla_bean",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/vanilla",
+      "required": false
+    },
+    {
+      "id": "#forge:crops/vanilla_bean",
+      "required": false
+    },
+    {
+      "id": "#forge:spices/vanilla",
+      "required": false
+    }
+  ]
+}

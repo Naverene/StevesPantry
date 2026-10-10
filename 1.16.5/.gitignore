@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+!src/**/build/
+
+# Minecraft dev runs
+run/
+runs/
+logs/
+crash-reports/
+
+# IDEs
+out/
+bin/
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+.classpath
+.project
+.settings/
